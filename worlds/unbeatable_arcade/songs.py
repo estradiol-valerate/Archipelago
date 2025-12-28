@@ -83,3 +83,27 @@ breakout_songs = [
     {"name":"square up", "b":4, "n":8, "h":11, "e":12, "u":18, "s":-1},
     {"name":"welcome to slamtown", "b":2, "n":7, "h":10, "e":13, "u":19, "s":-1},
 ]
+
+# Contains alternate names for each song for hinting/searching
+song_aliases = [
+    {"name":"beyond the heart (broken heart mix)", "aliases":["beyond the heart"]},
+    {"name":"done in love (from noisz sl)", "aliases":["done in love"]},
+    {"name":"k.moe (vip)", "aliases":["k.moe"]},
+    {"name":"the adventures of clef the great, the coolest person you've ever met in your entire life, who you are only a speck of dust next to in the grand scheme of things, featuring treble sometimes. an-please, dear god, clef, this is not the final title of the song. we cannot put this on there. first of all, it's too long, and second of all, it's... i mean, this isn't a title. this is barely a collection of words you said out loud. uh yeah why is that a problem. it's... you know what, sure, yeah, okay, label guy, put this on there. literally print every word in our conversation. do you have a maximum length? you don't? what, really? we have other songs on this record. what's that g... you know what? no, it's fine. we're gonna do it, and keep this tape so that when she complains about it i can show her the evidence.", "aliases":["the adventures of clef the great"]},
+]
+
+# All of the songs in the entire game, this is used for defining IDs
+all_songs = []
+all_songs.extend(base_songs)
+all_songs.extend(breakout_songs)
+
+included_songs = []
+
+
+def set_included_songs(breakout: bool) -> None:
+    included_songs.clear()
+    included_songs.extend(base_songs)
+
+    if breakout:
+        # Include the breakout edition songs if the user has the DLC
+        included_songs.extend(breakout_songs)

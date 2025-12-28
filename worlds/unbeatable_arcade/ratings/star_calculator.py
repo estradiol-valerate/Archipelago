@@ -7,6 +7,7 @@ def get_acc_power(acc: float) -> float:
     
     return pow(acc - 50, 1.12)
 
+
 def get_grade_bonus(acc: float, fc: bool, fail: bool) -> int:
     if fail:
         # No grade bonus for an F
@@ -30,6 +31,7 @@ def get_grade_bonus(acc: float, fc: bool, fail: bool) -> int:
     else:
         # D or HOW rank
         return 10
+
 
 def get_rating_from_play(level: int, acc: float, fc: bool, fail: bool) -> float:
     # Flat divisor applied to make ratings in the ranges the devs wanted
