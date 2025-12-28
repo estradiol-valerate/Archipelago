@@ -60,9 +60,24 @@ class StartSongCount(Range):
     default = 2
 
 
+class StartCharacterCount(Range):
+    """
+    Sets how many characters to start with.
+    These are currently filler items, but some challenges will require certain characters later.
+    """
+
+    display_name = "Starting Characters"
+
+    range_start = 1
+    range_end = 11
+
+    default = 1
+
+
 @dataclass
 class UNBEATABLEArcadeOptions(PerGameCommonOptions):
     target_rating: TargetRating
     use_breakout: UseBreakout
     min_difficulty: MinDifficulty
     start_song_count: StartSongCount
+    start_char_count: StartCharacterCount

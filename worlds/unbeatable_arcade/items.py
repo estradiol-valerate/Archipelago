@@ -44,17 +44,20 @@ PROG_DIFF_NAME = "Progressive Difficulty"
 # This isn't a real item, but UNBEATABLE has no infinite filler items
 FILLER_NAME = "Worn Out Tape"
 
+SONG_PREFIX = "Song: "
+CHAR_PREFIX = "Character: "
+
 # IDs are generated based on the lists so that it's not a nightmare to maintain game updates
 ITEM_NAME_TO_ID = {}
 
 def pre_calc_items() -> None:
     curr_id = 1
     for song in songs.all_songs:
-        ITEM_NAME_TO_ID[f"Song: {song["name"]}"] = curr_id
+        ITEM_NAME_TO_ID[f"{SONG_PREFIX}{song["name"]}"] = curr_id
         curr_id += 1
 
     for char in CHARACTER_NAMES:
-        ITEM_NAME_TO_ID[f"Character: {char}"] = curr_id
+        ITEM_NAME_TO_ID[f"{CHAR_PREFIX}{char}"] = curr_id
         curr_id += 1
     
     for trap in TRAP_NAMES:
@@ -113,8 +116,9 @@ def get_item_count(world: UNBEATABLEArcadeWorld) -> int:
     progressive_diff_count = 5 - world.options.min_difficulty
     item_count += progressive_diff_count
 
-    # Starting songs are removed from the pool
+    # Starting items are removed from the pool
     item_count -= world.options.start_song_count
+    item_count -= world.options.start_char_count
 
     return item_count
 
@@ -122,31 +126,46 @@ def get_item_count(world: UNBEATABLEArcadeWorld) -> int:
 def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
     # Grant the player's starting songs
     start_song_count = world.options.start_song_count
-    start_songs = []
+    start_song_names = []
     for i in range(0, start_song_count):
         new_song_name = world.random.choice(world.included_songs)["name"]
-        while new_song_name in start_songs:
+        while new_song_name in start_song_names:
             # In case we roll the same song twice, just roll again
             new_song_name = world.random.choice(world.included_songs)["name"]
 
-        song_item_name = f"Song: {new_song_name}"
-        start_songs.append(song_item_name)
+        start_song_names.append(new_song_name)
 
+        song_item_name = f"{SONG_PREFIX}{new_song_name}"
         new_song = world.create_item(song_item_name)
         world.push_precollected(new_song)
 
-    
+    # Grant the player's starting characters
+    start_char_count = world.options.start_char_count
+    start_char_names = []
+    for i in range(0, start_char_count):
+        new_char_name = world.random.choice(CHARACTER_NAMES)
+        while new_char_name in start_char_names:
+            new_char_name = world.random.choice(CHARACTER_NAMES)
+
+        start_char_names.append(new_char_name)
+
+        char_item_name = f"{CHAR_PREFIX}{new_char_name}"
+        new_char = world.create_item(char_item_name)
+        world.push_precollected(new_char)
 
     itempool: list[Item] = []
     for song in world.included_songs:
-        song_item_name = f"Song: {song["name"]}"
-        if song_item_name in start_songs:
+        if song["name"] in start_song_names:
             continue
 
+        song_item_name = f"{SONG_PREFIX}{song["name"]}"
         itempool.append(world.create_item(song_item_name))
 
     for char in CHARACTER_NAMES:
-        char_item_name = f"Character: {char}"
+        if char in start_char_names:
+            continue
+
+        char_item_name = f"{CHAR_PREFIX}{char}"
         itempool.append(world.create_item(char_item_name))
 
     # Min difficulty ranges from 0 - 4. We just need enough progressive
