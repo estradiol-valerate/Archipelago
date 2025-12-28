@@ -1,9 +1,13 @@
 from collections.abc import Mapping
 from typing import Any
 
+from BaseClasses import Region
 from worlds.AutoWorld import World
 
 from . import items
+# Order here is important
+# Locations relies on data generated from importing items
+from . import locations
 from . import options as unbeatable_arcade_options
 
 class UNBEATABLEArcadeWorld(World):
@@ -17,10 +21,15 @@ class UNBEATABLEArcadeWorld(World):
     options_dataclass = unbeatable_arcade_options.UNBEATABLEArcadeOptions
     options: unbeatable_arcade_options.UNBEATABLEArcadeOptions
 
+    location_name_to_id = locations.LOCATION_NAME_TO_ID
     item_name_to_id = items.ITEM_NAME_TO_ID
 
+    origin_region_name = "Arcade"
+
     def create_regions(self) -> None:
-        return
+        # Only a single region for this world
+        self.multiworld.regions = [Region(self.origin_region_name, self.player, self.multiworld)]
+        locations.create_all_locations(self)
 
 
     def set_rules(self) -> None:
@@ -28,7 +37,7 @@ class UNBEATABLEArcadeWorld(World):
     
 
     def create_items(self) -> None:
-        return
+        items.create_all_items(self)
     
 
     def create_item(self, name: str) -> items.UNBEATABLEArcadeItem:
@@ -40,4 +49,8 @@ class UNBEATABLEArcadeWorld(World):
 
 
     def fill_slot_data(self) -> Mapping[str, Any]:
-        return self.options.as_dict("target_rating", "use_breakout", "min_difficulty")
+        return self.options.as_dict(
+            "target_rating",
+            "use_breakout",
+            "min_difficulty"
+        )

@@ -41,14 +41,24 @@ FILLER_NAME = "Worn Out Tape"
 # IDs are generated based on the lists so that it's not a nightmare to maintain game updates
 ITEM_NAME_TO_ID = {}
 
-def generate_item_ids() -> None:
+# Also count the maximum number of items to include enough location IDs for them
+MAX_ITEMS = 0
+
+def pre_calc_items() -> None:
+    global MAX_ITEMS
     currId = 0
+    MAX_ITEMS = 0
+    
+    MAX_ITEMS += len(songs.all_songs)
     for song in songs.all_songs:
         ITEM_NAME_TO_ID[currId] = song["name"]
         currId += 1
+
+    MAX_ITEMS += len(CHARACTER_NAMES)
     for char in CHARACTER_NAMES:
         ITEM_NAME_TO_ID[currId] = char
         currId += 1
+    
     for trap in TRAP_NAMES:
         ITEM_NAME_TO_ID[currId] = trap
         currID += 1
@@ -57,8 +67,10 @@ def generate_item_ids() -> None:
     currId += 1
     ITEM_NAME_TO_ID[currId] = FILLER_NAME
 
+    # There are a maximum of 5 progressive difficulties
+    MAX_ITEMS += 5
 
-generate_item_ids()
+pre_calc_items()
 
 
 class UNBEATABLEArcadeItem(Item):
@@ -89,28 +101,7 @@ def create_item_with_classification(world: UNBEATABLEArcadeWorld, name: str) -> 
 
 
 def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
-    itempool: list[Item] = []
-
     songs.set_included_songs(world.options.use_breakout)
-
-    for song in songs.included_songs:
-        itempool.append(world.create_item(song["name"]))
-
-    for char in CHARACTER_NAMES:
-        itempool.append(world.create_item(char))
-
-    for trap in TRAP_NAMES:
-        itempool.append(world.create_item(trap))
-
-    # Min difficulty ranges from 0 - 4. We just need enough progressive
-    # diffs to go from min difficulty to star
-    progressive_diff_count = 5 - world.options.min_difficulty
-    for i in range(progressive_diff_count):
-        itempool.append(world.create_item(PROG_DIFF_NAME))
-
-    # Trap items to be added later
-
-    world.multiworld.itempool += itempool
 
     # Grant the player's starting songs
     start_song_count = world.options.start_song_count
@@ -124,3 +115,23 @@ def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
         start_songs.append(new_song_name)
         new_song = world.create_item(new_song_name)
         world.push_precollected(new_song)
+
+    itempool: list[Item] = []
+    for song in songs.included_songs:
+        # Ignore the starting songs here
+        # This is to more easily keep parity with location counts
+        if song["name"] not in start_songs:
+            itempool.append(world.create_item(song["name"]))
+
+    for char in CHARACTER_NAMES:
+        itempool.append(world.create_item(char))
+
+    # Min difficulty ranges from 0 - 4. We just need enough progressive
+    # diffs to go from min difficulty to star
+    progressive_diff_count = 5 - world.options.min_difficulty
+    for i in range(progressive_diff_count):
+        itempool.append(world.create_item(PROG_DIFF_NAME))
+
+    # Trap items to be added later
+
+    world.multiworld.itempool += itempool
