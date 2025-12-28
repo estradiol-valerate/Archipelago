@@ -1,7 +1,13 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from BaseClasses import Item, ItemClassification
 
 from . import songs
-from .world import UNBEATABLEArcadeWorld
+
+if TYPE_CHECKING:
+    from .world import UNBEATABLEArcadeWorld
 
 DEFAULT_CLASSIFICATIONS = {
     "Song": ItemClassification.progression,
@@ -46,26 +52,26 @@ MAX_ITEMS = 0
 
 def pre_calc_items() -> None:
     global MAX_ITEMS
-    currId = 0
+    curr_id = 0
     MAX_ITEMS = 0
     
     MAX_ITEMS += len(songs.all_songs)
     for song in songs.all_songs:
-        ITEM_NAME_TO_ID[currId] = song["name"]
-        currId += 1
+        ITEM_NAME_TO_ID[curr_id] = song["name"]
+        curr_id += 1
 
     MAX_ITEMS += len(CHARACTER_NAMES)
     for char in CHARACTER_NAMES:
-        ITEM_NAME_TO_ID[currId] = char
-        currId += 1
+        ITEM_NAME_TO_ID[curr_id] = char
+        curr_id += 1
     
     for trap in TRAP_NAMES:
-        ITEM_NAME_TO_ID[currId] = trap
-        currID += 1
+        ITEM_NAME_TO_ID[curr_id] = trap
+        curr_id += 1
 
-    ITEM_NAME_TO_ID[currId] = PROG_DIFF_NAME
-    currId += 1
-    ITEM_NAME_TO_ID[currId] = FILLER_NAME
+    ITEM_NAME_TO_ID[curr_id] = PROG_DIFF_NAME
+    curr_id += 1
+    ITEM_NAME_TO_ID[curr_id] = FILLER_NAME
 
     # There are a maximum of 5 progressive difficulties
     MAX_ITEMS += 5
@@ -120,9 +126,9 @@ def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
     # Grant the player's starting songs
     start_song_count = world.options.start_song_count
     start_songs = []
-    for i in range(start_song_count):
+    for i in range(0, start_song_count):
         new_song_name = world.random.choice(songs.included_songs)["name"]
-        while new_song_name in start_song_count:
+        while new_song_name in start_songs:
             # In case we roll the same song twice, just roll again
             new_song_name = world.random.choice(songs.included_songs)["name"]
 
@@ -143,7 +149,7 @@ def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
     # Min difficulty ranges from 0 - 4. We just need enough progressive
     # diffs to go from min difficulty to star
     progressive_diff_count = 5 - world.options.min_difficulty
-    for i in range(progressive_diff_count):
+    for i in range(0, progressive_diff_count):
         itempool.append(world.create_item(PROG_DIFF_NAME))
 
     # Trap items to be added later

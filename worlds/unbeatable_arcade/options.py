@@ -24,6 +24,8 @@ class UseBreakout(Toggle):
 
     display_name = "Include Breakout Songs"
 
+    default = False
+
 
 class MinDifficulty(Choice):
     """
@@ -31,7 +33,7 @@ class MinDifficulty(Choice):
     Higher difficulties must be unlocked by finding 'Progressive Difficulty' items.
     The more difficulties there are between this and what you need to reach your rating goal,
     the longer the game will generally be.
-    (Star difficulty is not available because some songs have none)
+    (You cannot start with star difficulties because some songs don't have one)
     """
 
     display_name = "Minimum Difficulty"
@@ -52,10 +54,10 @@ class StartSongCount(Range):
 
     display_name = "Starting Songs"
 
-    range_start: 1
-    range_end: 10
+    range_start = 1
+    range_end = 10
     
-    default: 2
+    default = 2
 
 
 @dataclass

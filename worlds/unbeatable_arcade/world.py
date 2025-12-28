@@ -7,8 +7,8 @@ from worlds.AutoWorld import World
 from . import items
 # Order here is important
 # Locations and rules rely on data generated from importing items.py
-from . import locations, rules
-from . import options as unbeatable_arcade_options
+from . import locations, rules, web_world
+from .options import UNBEATABLEArcadeOptions
 
 class UNBEATABLEArcadeWorld(World):
     """
@@ -18,8 +18,10 @@ class UNBEATABLEArcadeWorld(World):
 
     game = "UNBEATABLE Arcade"
 
-    options_dataclass = unbeatable_arcade_options.UNBEATABLEArcadeOptions
-    options: unbeatable_arcade_options.UNBEATABLEArcadeOptions
+    web = web_world.UNBEATABLEArcadeWebWorld()
+
+    options_dataclass = UNBEATABLEArcadeOptions
+    options: UNBEATABLEArcadeOptions
 
     location_name_to_id = locations.LOCATION_NAME_TO_ID
     item_name_to_id = items.ITEM_NAME_TO_ID
@@ -28,7 +30,7 @@ class UNBEATABLEArcadeWorld(World):
 
     def create_regions(self) -> None:
         # Only a single region for this world
-        self.multiworld.regions = [Region(self.origin_region_name, self.player, self.multiworld)]
+        self.multiworld.regions += [Region(self.origin_region_name, self.player, self.multiworld)]
         locations.create_all_locations(self)
 
 
