@@ -105,7 +105,7 @@ def create_item_with_classification(world: UNBEATABLEArcadeWorld, name: str) -> 
 
 
 def get_item_count(world: UNBEATABLEArcadeWorld) -> int:
-    item_count = len(songs.included_songs)
+    item_count = len(world.included_songs)
     item_count += len(CHARACTER_NAMES)
     
     # Min difficulty ranges from 0 - 4. We just need enough progressive
@@ -117,10 +117,8 @@ def get_item_count(world: UNBEATABLEArcadeWorld) -> int:
 
 
 def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
-    songs.set_included_songs(world.options.use_breakout)
-
     itempool: list[Item] = []
-    for song in songs.included_songs:
+    for song in world.included_songs:
         song_item_name = f"Song: {song["name"]}"
         itempool.append(world.create_item(song_item_name))
 
@@ -142,10 +140,10 @@ def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
     start_song_count = world.options.start_song_count
     start_songs = []
     for i in range(0, start_song_count):
-        new_song_name = world.random.choice(songs.included_songs)["name"]
+        new_song_name = world.random.choice(world.included_songs)["name"]
         while new_song_name in start_songs:
             # In case we roll the same song twice, just roll again
-            new_song_name = world.random.choice(songs.included_songs)["name"]
+            new_song_name = world.random.choice(world.included_songs)["name"]
 
         song_item_name = f"Song: {new_song_name}"
         start_songs.append(song_item_name)

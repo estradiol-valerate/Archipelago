@@ -4,10 +4,7 @@ from typing import Any
 from BaseClasses import Region
 from worlds.AutoWorld import World
 
-from . import items
-# Order here is important
-# Locations and rules rely on data generated from importing items.py
-from . import locations, rules, web_world
+from . import songs, items, locations, rules, web_world
 from .options import UNBEATABLEArcadeOptions
 
 class UNBEATABLEArcadeWorld(World):
@@ -29,6 +26,9 @@ class UNBEATABLEArcadeWorld(World):
     origin_region_name = "Arcade"
 
     def create_regions(self) -> None:
+        # Since this is the first stage of generation, add our included songs here
+        self.included_songs = songs.get_included_songs(self.options.use_breakout)
+
         # Only a single region for this world
         self.multiworld.regions += [Region(self.origin_region_name, self.player, self.multiworld)]
         locations.create_all_locations(self)

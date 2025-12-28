@@ -36,9 +36,6 @@ def add_location(world: UNBEATABLEArcadeWorld, region: Region, name: str) -> Non
 def create_all_locations(world: UNBEATABLEArcadeWorld) -> None:
     # We need to generate locations based on the number of items
     # So first, calculate the number of items
-    songs.set_included_songs(world.options.use_breakout)
-
-    # Count up how many items (and therefore checks) we need
     item_count = get_item_count(world)
 
     # This is where challenge board checks will go later

@@ -97,13 +97,13 @@ all_songs = []
 all_songs.extend(base_songs)
 all_songs.extend(breakout_songs)
 
-included_songs = []
 
-
-def set_included_songs(breakout: bool) -> None:
-    included_songs.clear()
+def get_included_songs(breakout: bool) -> list:
+    included_songs = []
     included_songs.extend(base_songs)
 
     if breakout:
         # Include the breakout edition songs if the user has the DLC
         included_songs.extend(breakout_songs)
+
+    return included_songs
