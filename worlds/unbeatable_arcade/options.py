@@ -144,3 +144,19 @@ class UNBEATABLEArcadeOptions(PerGameCommonOptions):
     allow_pfc: AllowPfc
     acc_curve_bias: AccCurveBias
     acc_curve_cutoff: AccCurveCutoff
+
+
+option_groups = [
+    OptionGroup(
+        "Gameplay Options",
+        [TargetRating, UseBreakout, MinDifficulty, StartSongCount, StartCharacterCount]
+    ),
+    OptionGroup(
+        "Difficulty Options",
+        [ActualRatingDiff, AllowPfc]
+    ),
+    OptionGroup(
+        "Advanced Options",
+        [AccCurveBias, AccCurveCutoff]
+    )
+]

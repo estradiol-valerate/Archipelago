@@ -11,7 +11,7 @@ from worlds.generic.Rules import set_rule
 from .game_info import GAME_NAME
 from .items import get_item_count
 from .locations import RATE_LOC_PREFIX
-from .ratings.ratings_logic import get_max_rating
+from .ratings.ratings_logic import rating_per_map, get_max_rating
 
 if TYPE_CHECKING:
     from .world import UNBEATABLEArcadeWorld
@@ -55,10 +55,8 @@ def set_all_rules(world: UNBEATABLEArcadeWorld) -> None:
     item_count = get_item_count(world)
     player = world.player
 
-    # For now just place locations linearly along the target rating
-    # This should be an adaptive curve of some sort later
-    rating_step = target_rating / (item_count)
-    curr_rating = rating_step
+    rating_step = (target_rating - 2) / (item_count - 25)
+    curr_rating = rating_per_map
     for i in range(0, item_count):
         location = world.get_location(f"{RATE_LOC_PREFIX}{i + 1}")
         print(f"{RATE_LOC_PREFIX}{i + 1}: {curr_rating}")
@@ -66,5 +64,12 @@ def set_all_rules(world: UNBEATABLEArcadeWorld) -> None:
             location,
             lambda state: get_max_rating(state, player) >= curr_rating
         )
+
+        if i >= 24:
+            curr_rating += rating_step
+        else:
+            # Limit rating gain by the flat per-map gain at first
+            # This mitigates restrictive start issues with high rating and low starting diff
+            curr_rating += rating_per_map
 
     world.multiworld.completion_condition[world.player] = lambda state: get_max_rating(state, player) >= target_rating

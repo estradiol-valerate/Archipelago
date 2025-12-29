@@ -74,7 +74,7 @@ pre_calc_items()
 
 ITEM_NAME_GROUPS = {
     "songs": set(f"{SONG_PREFIX}{entry["name"]}" for entry in songs.all_songs),
-    "characters": set(CHARACTER_NAMES),
+    "characters": set(f"{CHAR_PREFIX}{char}" for char in CHARACTER_NAMES),
     # "progression": {PROG_DIFF_NAME},
     "traps": set(TRAP_NAMES),
     "filler": {FILLER_NAME}
