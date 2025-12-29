@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from BaseClasses import Location, Region
 
-from . import songs
+from .game_info import GAME_NAME
 from .items import get_item_count, get_max_items
 
 if TYPE_CHECKING:
@@ -12,18 +12,20 @@ if TYPE_CHECKING:
 
 LOCATION_NAME_TO_ID = {}
 
+RATE_LOC_PREFIX = "Rating Unlock "
+
 def populate_location_ids() -> None:
     # Generate a generic location ID entry for each item
     # We want to generate one for the maximum possible number of items
     LOCATION_NAME_TO_ID.clear()
 
     for i in range(0, get_max_items()):
-        LOCATION_NAME_TO_ID[f"Rating Unlock {i + 1}"] = i + 1
+        LOCATION_NAME_TO_ID[f"{RATE_LOC_PREFIX}{i + 1}"] = i + 1
 
 populate_location_ids()
 
 class UNBEATABLEArcadeLocation(Location):
-    game = "UNBEATABLE Arcade"
+    game = GAME_NAME
 
 
 def add_location(world: UNBEATABLEArcadeWorld, region: Region, name: str) -> None:
@@ -43,4 +45,4 @@ def create_all_locations(world: UNBEATABLEArcadeWorld) -> None:
     # Generate all of our locations
     region = world.get_region(world.origin_region_name)
     for i in range(0, item_count):
-        add_location(world, region, f"Rating Unlock {i + 1}")
+        add_location(world, region, f"{RATE_LOC_PREFIX}{i + 1}")

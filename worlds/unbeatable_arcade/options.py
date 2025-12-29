@@ -4,17 +4,18 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
 
 class TargetRating(Range):
     """
-    The star rating you need to achieve to complete the randomizer.
+    The STAR rating you need to achieve to complete the randomizer.
     This is also used to calculate your expected performance for logic.
-    You should set this to just a bit lower than the rating you have right now.
+    You should set this to just a bit lower than the STAR rating you have right now.
+    NOTE: these values are multiplied by 100, so if want a target rating of 5.63, set this to 563
     """
 
     display_name = "Target Rating"
 
-    range_start = 3
-    range_end = 13
+    range_start = 300
+    range_end = 1300
 
-    default = 6
+    default = 600
 
 
 class UseBreakout(Toggle):
@@ -75,6 +76,22 @@ class StartCharacterCount(Range):
     default = 1
 
 
+class ActualRatingDiff(Range):
+    """
+    Represents the difference between your target STAR rating and your actual rating.
+    Higher values make the logic expect better scores from you, but this must be non-zero.
+    Ideally, you should set this to something around the actual difference between your target rating and actual rating.
+    NOTE: these values are multiplied by 100, so if want a difference of 0.26, set this to 26
+    """
+
+    display_name = "Actual Rating Difference"
+
+    range_start = 10
+    range_end = 300
+    
+    default = 50
+
+
 class AllowPfc(Toggle):
     """
     When enabled, logic may expect you to get 100% accuracy on low-difficulty maps.
@@ -94,10 +111,10 @@ class AccCurveBias(Range):
 
     display_name = "Accuracy Curve Bias"
 
-    range_start = 1
-    range_end = 10
+    range_start = 100
+    range_end = 1000
 
-    default = 5.4
+    default = 540
 
 
 class AccCurveCutoff(Range):
@@ -110,9 +127,9 @@ class AccCurveCutoff(Range):
     display_name = "Accuracy Curve Start Point"
 
     range_start = 0
-    range_end = 1
+    range_end = 100
 
-    default = 0.8
+    default = 80
 
 
 @dataclass
@@ -123,6 +140,7 @@ class UNBEATABLEArcadeOptions(PerGameCommonOptions):
     start_song_count: StartSongCount
     start_char_count: StartCharacterCount
 
+    actual_rating_diff: ActualRatingDiff
     allow_pfc: AllowPfc
     acc_curve_bias: AccCurveBias
     acc_curve_cutoff: AccCurveCutoff

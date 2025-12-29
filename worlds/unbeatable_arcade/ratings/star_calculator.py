@@ -13,7 +13,7 @@ rating_ranges = [
     {"min":pow(15, acc_pow) + 12, "max":pow(25, acc_pow) + 12, "gmod":12}, # C
     {"min":pow(25, acc_pow) + 15, "max":pow(35, acc_pow) + 15, "gmod":15}, # B
     {"min":pow(35, acc_pow) + 20, "max":pow(40, acc_pow) + 20, "gmod":20}, # A
-    {"min":pow(40, acc_pow) + 25, "max":float("inf"), "gmod":25}  # S
+    {"min":pow(40, acc_pow) + 25, "max":float("inf"), "gmod":25}           # S
 ]
 
 
@@ -51,7 +51,6 @@ def get_grade_bonus(acc: float, fc: bool, fail: bool) -> int:
 
 
 def get_rating_from_play(level: int, acc: float, fc: bool, fail: bool) -> float:
-
     accPower = get_acc_power(acc)
     gradeBonus = get_grade_bonus(acc, fc, fail)
 
@@ -95,4 +94,5 @@ def get_expected_acc_curve(target_rating: float, level: int, curve_cutoff: float
 
     # range + cutoff - range * e^( -bias(acc01 - cutoff) )
     exponent = -bias * (raw_acc - curve_cutoff)
-    return curve_range + curve_cutoff - (curve_range * math.exp(exponent))
+    curved_acc = curve_range + curve_cutoff - (curve_range * math.exp(exponent))
+    return curved_acc * 100

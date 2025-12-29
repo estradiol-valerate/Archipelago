@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from BaseClasses import Item, ItemClassification
 
 from . import songs
+from .game_info import GAME_NAME
 
 if TYPE_CHECKING:
     from .world import UNBEATABLEArcadeWorld
@@ -71,15 +72,16 @@ def pre_calc_items() -> None:
 pre_calc_items()
 
 ITEM_NAME_GROUPS = {
-    "songs": set(),
-    "characters": set(),
-    "progression": set(),
-    "traps": set()
+    "songs": set(f"{SONG_PREFIX}{entry["name"]}" for entry in songs.all_songs),
+    "characters": set(CHARACTER_NAMES),
+    "progression": {PROG_DIFF_NAME},
+    "traps": set(TRAP_NAMES),
+    "filler": {FILLER_NAME}
 }
 
 
 class UNBEATABLEArcadeItem(Item):
-    game = "UNBEATABLE Arcade"
+    game = GAME_NAME
 
 
 def get_max_items():
@@ -95,12 +97,12 @@ def get_random_filler_item_name(world: UNBEATABLEArcadeWorld) -> str:
     return FILLER_NAME
 
 
-def create_item_with_classification(world: UNBEATABLEArcadeWorld, name: str) -> str:
+def create_item_with_classification(world: UNBEATABLEArcadeWorld, name: str) -> UNBEATABLEArcadeItem:
     classification = ItemClassification.filler
-    id = 0
+    item_id = 0
     
     if name in ITEM_NAME_TO_ID:
-        id = ITEM_NAME_TO_ID[name]
+        item_id = ITEM_NAME_TO_ID[name]
 
     if name == PROG_DIFF_NAME:
         classification = DEFAULT_CLASSIFICATIONS["Difficulty"]
@@ -108,10 +110,10 @@ def create_item_with_classification(world: UNBEATABLEArcadeWorld, name: str) -> 
         classification = DEFAULT_CLASSIFICATIONS["Trap"]
     elif name in CHARACTER_NAMES:
         classification = DEFAULT_CLASSIFICATIONS["Character"]
-    elif any(song["name"] == name for song in songs.all_songs):
+    elif any(f"{SONG_PREFIX}{song["name"]}" == name for song in songs.all_songs):
         classification = DEFAULT_CLASSIFICATIONS["Song"]
 
-    return UNBEATABLEArcadeItem(name, classification, id, world.player)
+    return UNBEATABLEArcadeItem(name, classification, item_id, world.player)
 
 
 def get_item_count(world: UNBEATABLEArcadeWorld) -> int:
@@ -160,34 +162,27 @@ def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
         new_char = world.create_item(char_item_name)
         world.push_precollected(new_char)
 
-    songs: list[Item] = []
+    item_pool: list[Item] = []
     for song in world.included_songs:
         if song["name"] in start_song_names:
             continue
 
         song_item_name = f"{SONG_PREFIX}{song["name"]}"
-        songs.append(world.create_item(song_item_name))
+        item_pool.append(world.create_item(song_item_name))
 
-    characters: list[Item] = []
     for char in CHARACTER_NAMES:
         if char in start_char_names:
             continue
 
         char_item_name = f"{CHAR_PREFIX}{char}"
-        characters.append(world.create_item(char_item_name))
+        item_pool.append(world.create_item(char_item_name))
 
-    # Min difficulty ranges from 0 - 4. We just need enough progressive
+    # Min difficulty ranges from 0 to 4. We just need enough progressive
     # diffs to go from min difficulty to star
-    progression: list[Item] = []
     progressive_diff_count = 5 - world.options.min_difficulty
     for i in range(0, progressive_diff_count):
-        progression.append(world.create_item(PROG_DIFF_NAME))
+        item_pool.append(world.create_item(PROG_DIFF_NAME))
 
     # Trap items to be added later
 
-    # Create item groups
-    ITEM_NAME_GROUPS["songs"] = set(songs)
-    ITEM_NAME_GROUPS["characters"] = set(characters)
-    ITEM_NAME_GROUPS["progression"] = set(progression)
-
-    world.multiworld.itempool += songs + characters + progression
+    world.multiworld.itempool += item_pool
