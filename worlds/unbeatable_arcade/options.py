@@ -71,7 +71,7 @@ class CompletionPercent(Range):
     range_start = 1
     range_end = 100
 
-    default = 85
+    default = 90
 
 
 class UseBreakout(Toggle):

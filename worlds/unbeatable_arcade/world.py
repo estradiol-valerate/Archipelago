@@ -66,12 +66,17 @@ class UNBEATABLEArcadeWorld(World):
 
 
     def fill_slot_data(self) -> Mapping[str, Any]:
-        return self.options.as_dict(
+        slot_data = self.options.as_dict(
             "skill_rating",
             "use_breakout",
             "max_difficulty",
             "min_difficulty"
         )
+
+        slot_data["item_count"] = items.get_item_count(self)
+        slot_data["target_rating"] = ratings_logic.get_target_rating(self)
+
+        return slot_data
     
 
     def collect(self, state: CollectionState, item: Item) -> bool:
