@@ -6,9 +6,9 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
 class SkillRating(Range):
     """
     Your STAR rating.
-    This is also used to calculate your expected performance for logic.
-    You should set this to just a little bit lower than the STAR rating you have right now.
-    NOTE: these values are multiplied by 100, so if want to set a rating of 5.63, set this to 563
+    This is also used to calculate your expected accuracy on each map for logic.
+    You should set this to just a little bit lower than the STAR rating you have in the vanilla game right now.
+    NOTE: this represents the value multiplied by 100. For example, if want to set a rating of 5.63, set this to 563.
     """
 
     display_name = "Star Rating"
@@ -44,7 +44,6 @@ class MinDifficulty(Choice):
     Higher difficulties must be unlocked by finding 'Progressive Difficulty' items.
     The more difficulties there are between this and Maximum Difficulty,
     the longer the game will generally be.
-    NOTE: If this is higher than Maximum Difficulty, you will only ever unlock Minimum Difficulty.
     (You also can't use Star difficulty as the minimum because some songs don't have one.)
     """
 

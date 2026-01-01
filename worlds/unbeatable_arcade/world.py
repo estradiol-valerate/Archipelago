@@ -34,6 +34,12 @@ class UNBEATABLEArcadeWorld(World):
 
 
     def generate_early(self) -> None:
+        if self.options.min_difficulty > self.options.max_difficulty:
+            # Likely due to randomized settings, swap them so max > min
+            swap = self.options.min_difficulty
+            self.options.min_difficulty = self.options.max_difficulty
+            self.options.max_difficulty = swap;
+
         # Since this is the first stage of generation, add our included songs here
         self.included_songs = songs.get_included_songs(self.options.use_breakout)
 

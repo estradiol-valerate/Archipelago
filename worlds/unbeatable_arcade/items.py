@@ -55,11 +55,6 @@ ITEM_NAME_TO_ID = {}
 def get_diff_count(options: UNBEATABLEArcadeOptions) -> int:
     # Min difficulty ranges from 0 to 4, and max ranges from 0 to 5.
     # We need enough progressive diffs to unlock min difficulty and get up to max
-    min_difficulty = options.min_difficulty
-    max_difficulty = options.max_difficulty
-    if min_difficulty > max_difficulty:
-        return 1
-
     return (options.max_difficulty - options.min_difficulty) + 1
 
 
