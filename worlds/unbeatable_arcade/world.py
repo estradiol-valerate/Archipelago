@@ -73,10 +73,14 @@ class UNBEATABLEArcadeWorld(World):
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         slot_data = self.options.as_dict(
-            "skill_rating",
             "use_breakout",
             "max_difficulty",
-            "min_difficulty"
+            "min_difficulty",
+            
+            "skill_rating",
+            "allow_pfc",
+            "acc_curve_bias",
+            "acc_curve_cutoff"
         )
 
         slot_data["item_count"] = items.get_item_count(self)
