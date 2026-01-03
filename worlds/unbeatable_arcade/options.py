@@ -6,8 +6,8 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
 class SkillRating(Range):
     """
     Your STAR rating.
-    This is also used to calculate your expected accuracy on each map for logic.
-    You should set this to just a little bit lower than the STAR rating you have in the vanilla game right now.
+    This is used to calculate your expected accuracy on each chart for logic.
+    You should set this to just a bit lower than the STAR rating you have in the vanilla game right now.
     NOTE: this represents the value multiplied by 100. For example, if want to set a rating of 5.63, set this to 563.
     """
 
@@ -113,7 +113,7 @@ class StartCharacterCount(Range):
 
 class AllowPfc(Toggle):
     """
-    When enabled, logic may expect you to get 100% accuracy on low-difficulty maps.
+    When enabled, logic may expect you to get 100% accuracy on low-difficulty charts.
     """
 
     display_name = "Allow PFC"
@@ -124,7 +124,7 @@ class AllowPfc(Toggle):
 class AccCurveBias(Range):
     """
     Adjusts the slope of the expected accuracy curve.
-    Higher values lead to higher expected accuracy on low-difficulty maps.
+    Higher values lead to higher expected accuracy on low-difficulty charts.
     It's probably best to leave this unchanged.
     """
 
@@ -139,7 +139,7 @@ class AccCurveBias(Range):
 class AccCurveCutoff(Range):
     """
     Sets when the expected accuracy value starts tapering off.
-    Low values tend to lead to lower expected accuracy on high-difficulty maps.
+    Low values tend to lead to lower expected accuracy on high-difficulty charts.
     It's probably best to leave this unchanged.
     """
 
