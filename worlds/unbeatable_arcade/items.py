@@ -86,7 +86,7 @@ ITEM_NAME_GROUPS = {
 # Add our aliases as item name groups (hacky way to make them valid hints)
 for alias_entry in songs.song_aliases:
     for alias in alias_entry["aliases"]:
-        ITEM_NAME_GROUPS[f"{SONG_PREFIX}{alias}"] = f"{SONG_PREFIX}{alias_entry["name"]}"
+        ITEM_NAME_GROUPS[f"{SONG_PREFIX}{alias}"] = {f"{SONG_PREFIX}{alias_entry["name"]}"}
 
 
 class UNBEATABLEArcadeItem(Item):
