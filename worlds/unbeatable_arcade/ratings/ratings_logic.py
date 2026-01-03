@@ -27,6 +27,7 @@ def get_songs_with_ratings(songs: list, options: UNBEATABLEArcadeOptions) -> dic
     allow_pfc = options.allow_pfc
     acc_curve_cutoff = float(options.acc_curve_cutoff) / 100
     acc_curve_bias = float(options.acc_curve_bias) / 100
+    acc_curve_low_bias = float(options.acc_curve_low_bias) / 100
 
     # Calculate the expected rating to be earned from each song in the list
     for song in songs:
@@ -44,7 +45,7 @@ def get_songs_with_ratings(songs: list, options: UNBEATABLEArcadeOptions) -> dic
                 continue
 
             expected_acc = get_expected_acc_curve(
-                skill_rating, diff_level, acc_curve_cutoff, acc_curve_bias, allow_pfc
+                skill_rating, diff_level, acc_curve_cutoff, acc_curve_bias, acc_curve_low_bias, allow_pfc
             )
             expected_rating = custom_rating_calculator.get_custom_rating_from_play(
                 diff_level, expected_acc, False, expected_acc < expected_fail_threshold

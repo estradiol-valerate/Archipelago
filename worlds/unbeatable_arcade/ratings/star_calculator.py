@@ -80,11 +80,12 @@ def get_expected_acc(skill_rating: float, level: int) -> float:
     return pow(required_acc_rating, 1 / acc_pow) + 50
 
 
-def get_expected_acc_curve(skill_rating: float, level: int, curve_cutoff: float, bias: float, allow_pfc: bool) -> float:
+def get_expected_acc_curve(skill_rating: float, level: int, curve_cutoff: float, bias: float, low_bias: float, allow_pfc: bool) -> float:
     raw_acc = get_expected_acc(skill_rating, level) / 100
 
     if raw_acc < curve_cutoff:
-        return raw_acc * 100
+        exponent = low_bias * (raw_acc - curve_cutoff)
+        return curve_cutoff * math.exp(exponent) * 100
 
     # Apply a curve based on the maximum rating possible on the map
     # The curve starts linear until a certain point, then it turns to an exponential with a vertical asymptote

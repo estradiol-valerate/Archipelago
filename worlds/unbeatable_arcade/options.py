@@ -60,7 +60,7 @@ class MinDifficulty(Choice):
 
 class CompletionPercent(Range):
     """
-    Sets how much of the game you need to play to complete the randomizer.
+    Sets how close to the maximum rating you need to reach to complete the randomizer.
     Lower values make logic more lenient but can lead to pacing issues.
     If you want a shorter randomizer, consider increasing Minimum Difficulty first.
     """
@@ -70,7 +70,7 @@ class CompletionPercent(Range):
     range_start = 1
     range_end = 100
 
-    default = 80
+    default = 90
 
 
 class UseBreakout(Toggle):
@@ -123,12 +123,27 @@ class AllowPfc(Toggle):
 
 class AccCurveBias(Range):
     """
-    Adjusts the slope of the expected accuracy curve.
+    Adjusts the slope of the expected accuracy curve at high accuracy.
     Higher values lead to higher expected accuracy on low-difficulty charts.
     It's probably best to leave this unchanged.
     """
 
-    display_name = "Accuracy Curve Bias"
+    display_name = "High Curve Bias"
+
+    range_start = 0
+    range_end = 1000
+
+    default = 600
+
+
+class LowCurveBias(Range):
+    """
+    Adjusts the slope of the expected accuracy curve at low accuracy.
+    Higher values lead to lower expected accuracy on high-difficulty charts.
+    It's probably best to leave this unchanged.
+    """
+
+    display_name = "Low Curve Bias"
 
     range_start = 0
     range_end = 1000
@@ -138,8 +153,8 @@ class AccCurveBias(Range):
 
 class AccCurveCutoff(Range):
     """
-    Sets when the expected accuracy value starts tapering off.
-    Low values tend to lead to lower expected accuracy on high-difficulty charts.
+    Sets the accuracy where the high accuracy bias takes effect.
+    Low values tend to lead to higher expected accuracy on high-difficulty charts.
     It's probably best to leave this unchanged.
     """
 
@@ -148,7 +163,7 @@ class AccCurveCutoff(Range):
     range_start = 0
     range_end = 100
 
-    default = 60
+    default = 85
 
 
 @dataclass
@@ -163,6 +178,7 @@ class UNBEATABLEArcadeOptions(PerGameCommonOptions):
     skill_rating: SkillRating
     allow_pfc: AllowPfc
     acc_curve_bias: AccCurveBias
+    acc_curve_low_bias: LowCurveBias
     acc_curve_cutoff: AccCurveCutoff
 
 

@@ -82,6 +82,7 @@ class UNBEATABLEArcadeWorld(World):
             "skill_rating",
             "allow_pfc",
             "acc_curve_bias",
+            "acc_curve_low_bias",
             "acc_curve_cutoff"
         )
 
