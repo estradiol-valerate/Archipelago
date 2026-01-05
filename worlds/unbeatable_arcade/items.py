@@ -35,11 +35,12 @@ CHARACTER_NAMES = [
 ]
 
 TRAP_NAMES = [
-    "Fading Notes Trap",
+    "Stealth Trap",
     "Silence Trap",
     "Rainbow Trap",
     "Zoom Trap",
-    "Crawl Trap"
+    "Crawl Trap",
+    "Critical Trap"
 ]
 
 # This isn't a real item, but UNBEATABLE has no infinite filler items

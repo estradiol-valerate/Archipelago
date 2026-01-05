@@ -1,7 +1,7 @@
 from .star_calculator import get_rating_from_play
 
-diff_pow = 1.05
-score_falloff_base = 0.985
+diff_pow = 1.2
+score_falloff_base = 0.98
 
 
 def get_custom_rating_from_play(level: float, acc: float, fc: bool, fail: bool) -> float:

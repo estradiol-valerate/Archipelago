@@ -35,7 +35,7 @@ class MaxDifficulty(Choice):
     option_unbeatable = 4
     option_star = 5
 
-    default = option_star
+    default = option_hard
 
 
 class MinDifficulty(Choice):
@@ -44,7 +44,7 @@ class MinDifficulty(Choice):
     Higher difficulties must be unlocked by finding 'Progressive Difficulty' items.
     The more difficulties there are between this and Maximum Difficulty,
     the longer the game will generally be.
-    (You also can't use Star difficulty as the minimum because some songs don't have one.)
+    For shorter/sync games, sticking to just one difficulty is a good option.
     """
 
     display_name = "Minimum Difficulty"
@@ -54,8 +54,9 @@ class MinDifficulty(Choice):
     option_hard = 2
     option_expert = 3
     option_unbeatable = 4
+    option_star = 5
 
-    default = option_beginner
+    default = option_hard
 
 
 class CompletionPercent(Range):
@@ -94,7 +95,7 @@ class StartSongCount(Range):
     range_start = 1
     range_end = 10
     
-    default = 2
+    default = 3
 
 
 class StartCharacterCount(Range):
@@ -131,9 +132,9 @@ class AccCurveBias(Range):
     display_name = "High Curve Bias"
 
     range_start = 0
-    range_end = 1000
+    range_end = 2000
 
-    default = 600
+    default = 1000
 
 
 class LowCurveBias(Range):
@@ -146,9 +147,9 @@ class LowCurveBias(Range):
     display_name = "Low Curve Bias"
 
     range_start = 0
-    range_end = 1000
+    range_end = 2000
 
-    default = 200
+    default = 300
 
 
 class AccCurveCutoff(Range):
@@ -185,14 +186,14 @@ class UNBEATABLEArcadeOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup(
         "Gameplay Options",
-        [MaxDifficulty, MinDifficulty, CompletionPercent, StartSongCount, StartCharacterCount, UseBreakout]
+        [SkillRating, MaxDifficulty, MinDifficulty]
     ),
     OptionGroup(
-        "Difficulty Options",
-        [SkillRating, AllowPfc]
+        "Generation Options",
+        [CompletionPercent, StartSongCount, StartCharacterCount, UseBreakout]
     ),
     OptionGroup(
-        "Advanced Options",
-        [AccCurveBias, AccCurveCutoff]
+        "Advanced Difficulty Options",
+        [AllowPfc, AccCurveBias, AccCurveCutoff]
     )
 ]
