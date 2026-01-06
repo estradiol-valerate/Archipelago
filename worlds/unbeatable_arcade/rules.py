@@ -60,6 +60,7 @@ def set_all_rules(world: UNBEATABLEArcadeWorld) -> None:
         location = world.get_location(f"{RATE_LOC_PREFIX}{i + 1}")
         # print(f"{RATE_LOC_PREFIX}{i + 1}: {curr_rating}")
         set_rule(
+            location,
             lambda state, loc_rating = curr_rating: get_max_rating(state, player) >= loc_rating
         )
 

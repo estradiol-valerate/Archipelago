@@ -5,7 +5,7 @@ from BaseClasses import CollectionState, Item, ItemClassification, Region
 from worlds.AutoWorld import World
 
 from . import songs, items, locations, rules, web_world
-from .game_info import GAME_NAME
+from .game_info import GAME_NAME, VERSION, COMPATIBLE_VERSIONS
 from .options import UNBEATABLEArcadeOptions
 from .ratings import ratings_logic
 
@@ -90,6 +90,9 @@ class UNBEATABLEArcadeWorld(World):
 
         slot_data["item_count"] = self.item_count
         slot_data["target_rating"] = self.target_rating
+
+        slot_data["version"] = VERSION
+        slot_data["compatible_versions"] = COMPATIBLE_VERSIONS
 
         return slot_data
     
