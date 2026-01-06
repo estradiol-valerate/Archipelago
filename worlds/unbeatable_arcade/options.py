@@ -167,8 +167,96 @@ class AccCurveCutoff(Range):
     default = 85
 
 
+class UseTraps(Toggle):
+    """
+    Adds trap items to the item pool, which cause negative effects for you when collected.
+    All traps are temporary effects which deactivate at the end of a song or after a few seconds have passed.
+    """
+
+    display_name = "Include Traps"
+
+    default = True
+
+
+class SilenceTrapAmount(Range):
+    """
+    The amount of Silence Traps to add to the pool, which mute the music.
+    This represents a percentage of items to add compared to the pool of beneficial items.
+    (i.e. if there are 200 songs/characters in the pool, and this is set to 5, 10 Silence Traps will be added)
+    """
+
+    display_name = "Silence Trap Amount"
+
+    range_start = 0
+    range_end = 10
+
+    default = 4
+
+
+class StealthTrapAmount(Range):
+    """
+    The amount of Stealth Traps to add to the pool, which activate a stealth effect on all notes.
+    This represents a percentage of items to add compared to the pool of beneficial items.
+    (i.e. if there are 200 songs/characters in the pool, and this is set to 5, 10 Stealth Traps will be added)
+    """
+
+    display_name = "Stealth Trap Amount"
+
+    range_start = 0
+    range_end = 10
+
+    default = 4
+
+
+class RainbowTrapAmount(Range):
+    """
+    The amount of Rainbow Traps to add to the pool, which randomize the colors of all notes.
+    This represents a percentage of items to add compared to the pool of beneficial items.
+    (i.e. if there are 200 songs/characters in the pool, and this is set to 5, 10 Rainbow Traps will be added)
+    """
+
+    display_name = "Rainbow Trap Amount"
+
+    range_start = 0
+    range_end = 10
+
+    default = 4
+
+
+class ZoomTrapAmount(Range):
+    """
+    The amount of Zoom Traps to add to the pool, which increase note movement speed.
+    This represents a percentage of items to add compared to the pool of beneficial items.
+    (i.e. if there are 200 songs/characters in the pool, and this is set to 5, 10 Zoom Traps will be added)
+    """
+
+    display_name = "Zoom Trap Amount"
+
+    range_start = 0
+    range_end = 10
+
+    default = 4
+
+
+class CrawlTrapAmount(Range):
+    """
+    The amount of Crawl Traps to add to the pool, which reduce note movement speed.
+    This represents a percentage of items to add compared to the pool of beneficial items.
+    (i.e. if there are 200 songs/characters in the pool, and this is set to 5, 10 Crawl Traps will be added)
+    """
+
+    display_name = "Crawl Trap Amount"
+
+    range_start = 0
+    range_end = 10
+
+    default = 4
+
+
 @dataclass
 class UNBEATABLEArcadeOptions(PerGameCommonOptions):
+    skill_rating: SkillRating
+
     use_breakout: UseBreakout
     max_difficulty: MaxDifficulty
     min_difficulty: MinDifficulty
@@ -176,7 +264,13 @@ class UNBEATABLEArcadeOptions(PerGameCommonOptions):
     start_song_count: StartSongCount
     start_char_count: StartCharacterCount
 
-    skill_rating: SkillRating
+    use_traps: UseTraps
+    silence_amount: SilenceTrapAmount
+    stealth_amount: StealthTrapAmount
+    rainbow_amount: RainbowTrapAmount
+    zoom_amount: ZoomTrapAmount
+    crawl_amount: CrawlTrapAmount
+
     allow_pfc: AllowPfc
     acc_curve_bias: AccCurveBias
     acc_curve_low_bias: LowCurveBias
@@ -191,6 +285,10 @@ option_groups = [
     OptionGroup(
         "Generation Options",
         [CompletionPercent, StartSongCount, StartCharacterCount, UseBreakout]
+    ),
+    OptionGroup(
+        "Trap Options",
+        [UseTraps, SilenceTrapAmount, StealthTrapAmount, RainbowTrapAmount, ZoomTrapAmount, CrawlTrapAmount]
     ),
     OptionGroup(
         "Advanced Difficulty Options",

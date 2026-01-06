@@ -12,7 +12,7 @@ from .ratings import ratings_logic
 class UNBEATABLEArcadeWorld(World):
     """
     UNBEATABLE is a rhythm game where music is illegal and you do crimes.
-    UNBEATABLE Arcade Mode is a gamemode separate from the story mode, where you can play songs from the game (and other places) to your heart's content.
+    UNBEATABLE Arcade Mode is a game mode separate from the story mode, where you can play songs from the game (and other places) to your heart's content.
     """
 
     game = GAME_NAME
@@ -30,6 +30,7 @@ class UNBEATABLEArcadeWorld(World):
     origin_region_name = "Arcade"
 
     included_songs: list
+    item_count: int
     rated_songs: dict[str, dict[int, float]]
     target_rating: float
 
@@ -43,6 +44,7 @@ class UNBEATABLEArcadeWorld(World):
 
         # Since this is the first stage of generation, add our included songs here
         self.included_songs = songs.get_included_songs(self.options.use_breakout)
+        self.item_count = items.get_item_count(self)
 
         # Precalculate the expected rating gains per-map
         # This is stored as a dictionary indexed by song item names,
@@ -86,7 +88,7 @@ class UNBEATABLEArcadeWorld(World):
             "acc_curve_cutoff"
         )
 
-        slot_data["item_count"] = items.get_item_count(self)
+        slot_data["item_count"] = self.item_count
         slot_data["target_rating"] = self.target_rating
 
         return slot_data

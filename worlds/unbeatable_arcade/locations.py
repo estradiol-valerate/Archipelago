@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from BaseClasses import Location, Region
 
 from .game_info import GAME_NAME
-from .items import get_item_count, get_max_items
+from .items import get_max_items
 
 if TYPE_CHECKING:
     from .world import UNBEATABLEArcadeWorld
@@ -37,8 +37,7 @@ def add_location(world: UNBEATABLEArcadeWorld, region: Region, name: str) -> Non
 
 def create_all_locations(world: UNBEATABLEArcadeWorld) -> None:
     # We need to generate locations based on the number of items
-    # So first, calculate the number of items
-    item_count = get_item_count(world)
+    item_count = world.item_count
 
     # This is where challenge board checks will go later
 

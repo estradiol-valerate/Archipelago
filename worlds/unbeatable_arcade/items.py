@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import math
+
 from BaseClasses import Item, ItemClassification
 
 from . import songs
@@ -35,8 +37,8 @@ CHARACTER_NAMES = [
 ]
 
 TRAP_NAMES = [
-    "Stealth Trap",
     "Silence Trap",
+    "Stealth Trap",
     "Rainbow Trap",
     "Zoom Trap",
     "Crawl Trap",
@@ -49,33 +51,23 @@ FILLER_NAME = "Worn Out Tape"
 SONG_PREFIX = "Progressive Song: "
 CHAR_PREFIX = "Character: "
 
-# IDs are generated based on the lists so that it's not a nightmare to maintain game updates
+# Generate IDs based on the lists so that it's not a nightmare to maintain game updates
 ITEM_NAME_TO_ID = {}
 
+curr_id = 1
+for song in songs.all_songs:
+    ITEM_NAME_TO_ID[f"{SONG_PREFIX}{song["name"]}"] = curr_id
+    curr_id += 1
 
-def get_diff_count(options: UNBEATABLEArcadeOptions) -> int:
-    # Min difficulty ranges from 0 to 4, and max ranges from 0 to 5.
-    # We need enough progressive diffs to unlock min difficulty and get up to max
-    return (options.max_difficulty - options.min_difficulty) + 1
+for char in CHARACTER_NAMES:
+    ITEM_NAME_TO_ID[f"{CHAR_PREFIX}{char}"] = curr_id
+    curr_id += 1
 
+for trap in TRAP_NAMES:
+    ITEM_NAME_TO_ID[trap] = curr_id
+    curr_id += 1
 
-def pre_calc_items() -> None:
-    curr_id = 1
-    for song in songs.all_songs:
-        ITEM_NAME_TO_ID[f"{SONG_PREFIX}{song["name"]}"] = curr_id
-        curr_id += 1
-
-    for char in CHARACTER_NAMES:
-        ITEM_NAME_TO_ID[f"{CHAR_PREFIX}{char}"] = curr_id
-        curr_id += 1
-    
-    for trap in TRAP_NAMES:
-        ITEM_NAME_TO_ID[trap] = curr_id
-        curr_id += 1
-
-    ITEM_NAME_TO_ID[FILLER_NAME] = curr_id
-
-pre_calc_items()
+ITEM_NAME_TO_ID[FILLER_NAME] = curr_id
 
 ITEM_NAME_GROUPS = {
     "songs": set(f"{SONG_PREFIX}{entry["name"]}" for entry in songs.all_songs),
@@ -94,10 +86,26 @@ class UNBEATABLEArcadeItem(Item):
     game = GAME_NAME
 
 
+def get_diff_count(options: UNBEATABLEArcadeOptions) -> int:
+    # Min difficulty ranges from 0 to 4, and max ranges from 0 to 5.
+    # We need enough progressive diffs to unlock min difficulty and get up to max
+    return (options.max_difficulty - options.min_difficulty) + 1
+
+
+def get_trap_count(item_count: int, trap_amount: float) -> int:
+    trap_percent = trap_amount / 100
+    return math.floor(float(item_count) * trap_percent)
+
+
 def get_max_items():
     # There are a maximum of 6 progressive items per song
     count = len(songs.all_songs) * 6
     count += len(CHARACTER_NAMES)
+
+    good_item_count = count
+    for i in range(0, len(TRAP_NAMES)):
+        # There is a maximum trap item amount of 10%
+        count += get_trap_count(good_item_count, 10)
 
     return count
 
@@ -141,6 +149,14 @@ def get_item_count(world: UNBEATABLEArcadeWorld) -> int:
     # Starting items are removed from the pool
     item_count -= world.options.start_song_count
     item_count -= world.options.start_char_count
+
+    if world.options.use_traps:
+        good_item_count = item_count
+        item_count += get_trap_count(good_item_count, world.options.silence_amount)
+        item_count += get_trap_count(good_item_count, world.options.stealth_amount)
+        item_count += get_trap_count(good_item_count, world.options.rainbow_amount)
+        item_count += get_trap_count(good_item_count, world.options.zoom_amount)
+        item_count += get_trap_count(good_item_count, world.options.crawl_amount)
 
     return item_count
 
@@ -200,6 +216,18 @@ def create_all_items(world: UNBEATABLEArcadeWorld) -> None:
         char_item_name = f"{CHAR_PREFIX}{char}"
         item_pool.append(world.create_item(char_item_name))
 
-    # Trap items to be added later
+    if world.options.use_traps:
+        item_count = len(item_pool)
+        for i in range(0, get_trap_count(item_count, world.options.silence_amount)):
+            item_pool.append(world.create_item(TRAP_NAMES[0]))
+        for i in range(0, get_trap_count(item_count, world.options.stealth_amount)):
+            item_pool.append(world.create_item(TRAP_NAMES[1]))
+        for i in range(0, get_trap_count(item_count, world.options.rainbow_amount)):
+            item_pool.append(world.create_item(TRAP_NAMES[2]))
+        for i in range(0, get_trap_count(item_count, world.options.zoom_amount)):
+            item_pool.append(world.create_item(TRAP_NAMES[3]))
+        for i in range(0, get_trap_count(item_count, world.options.crawl_amount)):
+            item_pool.append(world.create_item(TRAP_NAMES[4]))
+
 
     world.multiworld.itempool += item_pool

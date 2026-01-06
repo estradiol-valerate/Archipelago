@@ -7,7 +7,6 @@ from worlds.AutoWorld import LogicMixin
 from worlds.generic.Rules import set_rule
 
 from .game_info import GAME_NAME
-from .items import get_item_count
 from .locations import RATE_LOC_PREFIX
 from .ratings.ratings_logic import get_max_rating
 
@@ -51,7 +50,7 @@ class RatingState(LogicMixin):
 def set_all_rules(world: UNBEATABLEArcadeWorld) -> None:
     target_rating = world.target_rating
 
-    item_count = get_item_count(world)
+    item_count = world.item_count
     player = world.player
 
     rating_step = target_rating / item_count
@@ -61,7 +60,6 @@ def set_all_rules(world: UNBEATABLEArcadeWorld) -> None:
         location = world.get_location(f"{RATE_LOC_PREFIX}{i + 1}")
         # print(f"{RATE_LOC_PREFIX}{i + 1}: {curr_rating}")
         set_rule(
-            location,
             lambda state, loc_rating = curr_rating: get_max_rating(state, player) >= loc_rating
         )
 
