@@ -7,7 +7,7 @@ class SkillRating(Range):
     """
     Your STAR rating.
     This is used to calculate your expected accuracy on each chart for logic.
-    You should set this to just a bit lower than the STAR rating you have in the vanilla game right now.
+    You should set this to just a little bit lower than the STAR rating you have in the vanilla game right now.
     NOTE: this represents the value multiplied by 100. For example, if want to set a rating of 5.63, set this to 563.
     """
 
@@ -71,7 +71,7 @@ class CompletionPercent(Range):
     range_start = 1
     range_end = 99
 
-    default = 95
+    default = 90
 
 
 class UseBreakout(Toggle):
@@ -170,7 +170,8 @@ class AccCurveCutoff(Range):
 class UseTraps(Toggle):
     """
     Adds trap items to the item pool, which cause negative effects for you when collected.
-    All traps are temporary effects which deactivate at the end of a song or after a few seconds have passed.
+    All traps are temporary effects which deactivate at the end of a song or after a some time has passed.
+    The duration of each trap can be adjusted client-side using the mod configuration.
     """
 
     display_name = "Include Traps"
