@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from .world import UNBEATABLEArcadeWorld
 
 DEFAULT_CLASSIFICATIONS = {
-    "Song": ItemClassification.progression_deprioritized_skip_balancing,
+    "Song": ItemClassification.progression_deprioritized,
     # Will no longer be filler once challenge board is included
     # because certain characters are needed for some challenges
     "Character": ItemClassification.filler,
