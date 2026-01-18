@@ -9,10 +9,10 @@ class SkillRating(FloatRangeText):
     Your vanilla in-game rating.
     This is used to calculate your expected accuracy on each song for logic, and greatly impacts the difficulty and pacing of the randomizer.
     
-    Your vanilla rating can be found just above your player profile, and more detais are found by pressing `3` on the player leaderboard page.
+    Your vanilla rating can be found just above your player profile, and more details can be found on the player leaderboard page by pressing `3`.
     It is recommended that you set at least 25 scores in the base game first so that you know your rating.
     If you have not set 25 scores yet, these are some good general ranges depending on what song difficulty you can perform well on:
-    beginner: 2.5-3.5, normal: 3.0-4.0, hard: 4.0-5.5, expert: 6.0-7.0, unbeatable: 7.5-9.0, star: 9.5+
+    **beginner:** 2.5 - 3.5, **normal:** 3.0 - 4.0, **hard:** 4.0 - 5.5, **expert:** 6.0 - 7.0, **unbeatable:** 7.5 - 9.0, **star:** 9.5+
 
     The minimum value is 2.500, and the maximum is 13.000
     """
@@ -47,7 +47,7 @@ class MaxDifficulty(Choice):
 class MinDifficulty(Choice):
     """
     Sets the first unlocked difficulty. Lower difficulties than this will be inacessible.
-    Higher difficulties must be unlocked by finding 'Progressive Difficulty' items.
+    Higher difficulties must be unlocked by finding multiple 'Progressive Song' items for each song.
     The more difficulties there are between this and Maximum Difficulty, the longer the game will be.
     For shorter/sync games, sticking to just one or two difficulties is usually ideal.
     """
@@ -68,8 +68,9 @@ class CompletionPercent(Range):
     """
     Sets how close to the maximum rating you need to reach to complete the randomizer.
     Lower values make logic more lenient but can lead to pacing issues.
+
     If you want a shorter randomizer, consider increasing Minimum Difficulty first.
-    Raising this is a good option for or asyncs or games with low difficulty count where you want a challenge.
+    Raising this is a good option for asyncs or games with a low difficulty count.
     """
 
     display_name = "Completion Percentage"
@@ -82,7 +83,7 @@ class CompletionPercent(Range):
 
 class UseBreakout(Toggle):
     """
-    Includes songs included in UNBEATABLE - Breakout Edition.
+    Includes songs from UNBEATABLE - Breakout Edition.
     This requires that you own the UNBEATABLE - Breakout Edition Upgrade DLC and have it installed.
     """
 
@@ -192,8 +193,8 @@ class UseTraps(Toggle):
 class NonLocalTraps(Toggle):
     """
     Tries to place traps outside of your local world, so they're more likely to be found by other players.
-    Can make traps a bit more interesting by making them activate mid-song more often.
-    Enabling this is the same as adding all the trap item names to the non_local_items setting.
+    This can make traps a bit more interesting by making them activate mid-song more often.
+    Enabling this is the same as adding all the trap item names to the Non-local Items setting.
     """
 
     display_name = "Non-Local Traps"
