@@ -85,12 +85,16 @@ class UNBEATABLEArcadeWorld(World):
             "max_difficulty",
             "min_difficulty",
             
-            "skill_rating",
+            # "skill_rating",
             "allow_pfc",
             "acc_curve_bias",
             "acc_curve_low_bias",
             "acc_curve_cutoff"
         )
+
+        # For compatibility with client v0.1.0, convert skill rating to the old int format
+        # NOTE: Stop doing this in v0.2!!! Remove this and uncomment it from the options dict
+        slot_data["skill_rating"] = int(self.options.skill_rating * 100)
 
         slot_data["item_count"] = self.item_count
         slot_data["target_rating"] = self.target_rating

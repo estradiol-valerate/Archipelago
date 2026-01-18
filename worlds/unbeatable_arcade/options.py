@@ -1,29 +1,35 @@
 from dataclasses import dataclass
 
-from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
+from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle, Visibility
+from .misc.float_range_text import FloatRangeText
 
 
-class SkillRating(Range):
+class SkillRating(FloatRangeText):
     """
-    Your STAR rating.
-    This is used to calculate your expected accuracy on each chart for logic.
-    You should set this to just a little bit lower than the STAR rating you have in the vanilla game right now.
-    NOTE: this represents the value multiplied by 100. For example, if want to set a rating of 5.63, set this to 563.
+    Your vanilla in-game rating.
+    This is used to calculate your expected accuracy on each song for logic, and greatly impacts the difficulty and pacing of the randomizer.
+    
+    Your vanilla rating can be found just above your player profile, and more detais are found by pressing `3` on the player leaderboard page.
+    It is recommended that you set at least 25 scores in the base game first so that you know your rating.
+    If you have not set 25 scores yet, these are some good general ranges depending on what song difficulty you can perform well on:
+    beginner: 2.5-3.5, normal: 3.0-4.0, hard: 4.0-5.5, expert: 6.0-7.0, unbeatable: 7.5-9.0, star: 9.5+
+
+    The minimum value is 2.500, and the maximum is 13.000
     """
 
     display_name = "Star Rating"
 
-    range_start = 250
-    range_end = 1300
+    range_start = 2.500
+    range_end = 13.000
 
-    default = 500
+    default = "5.000"
 
 
 class MaxDifficulty(Choice):
     """
     Sets the highest difficulty to unlock.
     Difficulties above this will be inaccessible during the randomizer.
-    You should set this to the highest difficulty you can consistently pass.
+    You should set this to the highest difficulty where you can consistently pass all of the songs.
     """
 
     display_name = "Maximum Difficulty"
@@ -42,9 +48,8 @@ class MinDifficulty(Choice):
     """
     Sets the first unlocked difficulty. Lower difficulties than this will be inacessible.
     Higher difficulties must be unlocked by finding 'Progressive Difficulty' items.
-    The more difficulties there are between this and Maximum Difficulty,
-    the longer the game will generally be.
-    For shorter/sync games, sticking to just one difficulty is a good option.
+    The more difficulties there are between this and Maximum Difficulty, the longer the game will be.
+    For shorter/sync games, sticking to just one or two difficulties is usually ideal.
     """
 
     display_name = "Minimum Difficulty"
@@ -64,6 +69,7 @@ class CompletionPercent(Range):
     Sets how close to the maximum rating you need to reach to complete the randomizer.
     Lower values make logic more lenient but can lead to pacing issues.
     If you want a shorter randomizer, consider increasing Minimum Difficulty first.
+    Raising this is a good option for or asyncs or games with low difficulty count where you want a challenge.
     """
 
     display_name = "Completion Percentage"
@@ -76,7 +82,7 @@ class CompletionPercent(Range):
 
 class UseBreakout(Toggle):
     """
-    Enables songs included in UNBEATABLE - Breakout Edition.
+    Includes songs included in UNBEATABLE - Breakout Edition.
     This requires that you own the UNBEATABLE - Breakout Edition Upgrade DLC and have it installed.
     """
 
@@ -118,6 +124,7 @@ class AllowPfc(Toggle):
     """
 
     display_name = "Allow PFC"
+    visibility = Visibility.complex_ui
 
     default = True
 
@@ -130,11 +137,12 @@ class AccCurveBias(Range):
     """
 
     display_name = "High Curve Bias"
+    visibility = Visibility.complex_ui
 
     range_start = 0
     range_end = 2000
 
-    default = 1000
+    default = 1200
 
 
 class LowCurveBias(Range):
@@ -145,11 +153,12 @@ class LowCurveBias(Range):
     """
 
     display_name = "Low Curve Bias"
+    visibility = Visibility.complex_ui
 
     range_start = 0
     range_end = 2000
 
-    default = 300
+    default = 400
 
 
 class AccCurveCutoff(Range):
@@ -160,6 +169,7 @@ class AccCurveCutoff(Range):
     """
 
     display_name = "Accuracy Curve Start Point"
+    visibility = Visibility.complex_ui
 
     range_start = 0
     range_end = 100
