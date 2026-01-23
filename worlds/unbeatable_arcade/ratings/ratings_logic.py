@@ -21,7 +21,7 @@ expected_fail_threshold = 55
 def get_songs_with_ratings(songs: list, options: UNBEATABLEArcadeOptions) -> dict[str, dict[int, float]]:
     rated_songs = {}
 
-    skill_rating = options.skill_rating
+    skill_rating = float(options.skill_rating) / 100
     diff_count = get_diff_count(options)
 
     allow_pfc = options.allow_pfc

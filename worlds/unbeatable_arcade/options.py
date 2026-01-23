@@ -4,7 +4,7 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle, Vi
 from .misc.float_range_text import FloatRangeText
 
 
-class SkillRating(FloatRangeText):
+class SkillRating(Range):
     """
     Your vanilla in-game rating.
     This is used to calculate your expected accuracy on each song for logic, and greatly impacts the difficulty and pacing of the randomizer.
@@ -12,17 +12,24 @@ class SkillRating(FloatRangeText):
     Your vanilla rating can be found just above your player profile, and more details can be found on the player leaderboard page by pressing `3`.
     It is recommended that you set at least 25 scores in the base game first so that you know your rating.
     If you have not set 25 scores yet, these are some good general ranges depending on what song difficulty you can perform well on:
-    **beginner:** 2.5 - 3.5, **normal:** 3.0 - 4.0, **hard:** 4.0 - 5.5, **expert:** 6.0 - 7.0, **unbeatable:** 7.5 - 9.0, **star:** 9.5+
+    **beginner:** 2.5 - 3.5, **normal:** 3.5 - 4.5, **hard:** 4.5 - 5.5, **expert:** 5.5 - 7.0, **unbeatable:** 7.0 - 9.0, **star:** 9.0+
 
-    The minimum value is 2.500, and the maximum is 13.000
+    NOTE: This value will be divided by 100. For example, if you want to set a skill rating of 5.83, set this to 583
     """
 
-    display_name = "Star Rating"
+    # """The minimum value is 2.500, and the maximum is 13.000"""
 
-    range_start = 2.500
-    range_end = 13.000
+    display_name = "Skill Rating"
 
-    default = "5.000"
+    # range_start = 2.500
+    # range_end = 13.000
+
+    # default = "5.000"
+
+    range_start = 250
+    range_end = 1300
+
+    default = 500
 
 
 class MaxDifficulty(Choice):
