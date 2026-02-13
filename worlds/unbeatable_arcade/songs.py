@@ -12,11 +12,11 @@ base_songs = [
     {"name":"bookend song", "b":5, "n":10, "h":13, "e":17, "u":23, "s":-1},
     {"name":"bookend song -opening ver.-", "b":2, "n":5, "h":7, "e":10, "u":12, "s":-1},
     {"name":"call_home", "b":1, "n":5, "h":7, "e":10, "u":12, "s":-1},
-    {"name":"ch2_dream1", "b":2, "n":6, "h":9, "e":11, "u":12, "s":-1},
-    {"name":"ch2_dream2", "b":2, "n":5, "h":8, "e":10, "u":12, "s":-1},
-    {"name":"ch2_dream3", "b":2, "n":4, "h":7, "e":9, "u":12, "s":-1},
-    {"name":"ch4_dream1", "b":3, "n":7, "h":9, "e":11, "u":15, "s":-1},
-    {"name":"ch4_dream2", "b":4, "n":7, "h":10, "e":12, "u":17, "s":-1},
+    {"name":"held_up", "b":2, "n":6, "h":9, "e":11, "u":12, "s":-1},
+    {"name":"dead_summer", "b":2, "n":5, "h":8, "e":10, "u":12, "s":-1},
+    {"name":"de_tassel", "b":2, "n":4, "h":7, "e":9, "u":12, "s":-1},
+    {"name":"old_feeling", "b":3, "n":7, "h":9, "e":11, "u":15, "s":-1},
+    {"name":"new_form", "b":4, "n":7, "h":10, "e":12, "u":17, "s":-1},
     {"name":"cop trauma", "b":3, "n":7, "h":10, "e":13, "u":17, "s":-1},
     {"name":"cosmic starter", "b":2, "n":7, "h":10, "e":13, "u":20, "s":-1},
     {"name":"dialtone", "b":2, "n":8, "h":12, "e":15, "u":19, "s":-1},
@@ -55,7 +55,7 @@ base_songs = [
     {"name":"proper rhythm (all there is to it)", "b":5, "n":9, "h":12, "e":15, "u":22, "s":24},
     {"name":"proper rhythm bootleg", "b":4, "n":8, "h":12, "e":15, "u":20, "s":24},
     {"name":"rest vs. beat", "b":5, "n":9, "h":12, "e":16, "u":23, "s":-1},
-    {"name":"re-tuned", "b":1, "n":7, "h":12, "e":15, "u":20, "s":-1},
+    {"name":"re-tuned", "b":1, "n":7, "h":12, "e":15, "u":20, "s":24},
     {"name":"silent spiral", "b":4, "n":8, "h":11, "e":14, "u":21, "s":-1},
     {"name":"sleeping in", "b":2, "n":5, "h":11, "e":14, "u":18, "s":-1},
     {"name":"stolen", "b":2, "n":7, "h":10, "e":13, "u":17, "s":-1},
@@ -73,6 +73,9 @@ base_songs = [
     {"name":"yeah yeah yeah yeah yeah yeah yeah yeah", "b":2, "n":7, "h":10, "e":13, "u":18, "s":20},
     {"name":"yeah yeah yeah yeah yeah yeah yeah yeah [trailer edit]", "b":2, "n":7, "h":11, "e":13, "u":20, "s":-1},
     {"name":"zero moment", "b":4, "n":8, "h":11, "e":15, "u":22, "s":25},
+    {"name":"swing", "b":-1, "n":-1, "h":-1,"e":-1,"u":-1,"s":24},
+    {"name":"low pitch", "b":2, "n":8, "h":10,"e":13,"u":17,"s":-1},
+    {"name":"mic check", "b":3, "n":7, "h":10,"e":13,"u":18,"s":-1}
 ]
 
 # All songs included with the breakout edition
