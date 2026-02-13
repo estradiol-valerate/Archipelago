@@ -54,7 +54,7 @@ base_songs = [
     {"name":"proper rhythm - (must die! remix)", "b":3, "n":8, "h":9, "e":13, "u":17, "s":20},
     {"name":"proper rhythm (all there is to it)", "b":5, "n":9, "h":12, "e":15, "u":22, "s":24},
     {"name":"proper rhythm bootleg", "b":4, "n":8, "h":12, "e":15, "u":20, "s":24},
-    {"name":"rest vs. beat", "b":5, "n":9, "h":12, "e":16, "u":23, "s":-1},
+    {"name":"rest vs. beat", "b":5, "n":9, "h":12, "e":16, "u":24, "s":-1},
     {"name":"re-tuned", "b":1, "n":7, "h":12, "e":15, "u":20, "s":24},
     {"name":"silent spiral", "b":4, "n":8, "h":11, "e":14, "u":21, "s":-1},
     {"name":"sleeping in", "b":2, "n":5, "h":11, "e":14, "u":18, "s":-1},
