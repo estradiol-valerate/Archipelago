@@ -197,16 +197,16 @@ class UseTraps(Toggle):
     default = True
 
 
-class NonLocalTraps(Toggle):
-    """
-    Tries to place traps outside of your local world, so they're more likely to be found by other players.
-    This can make traps a bit more interesting by making them activate mid-song more often.
-    Enabling this is the same as adding all the trap item names to the Non-local Items setting.
-    """
-
-    display_name = "Non-local Traps"
-
-    default = False
+# class NonLocalTraps(Toggle):
+#     """
+#     Tries to place traps outside of your local world, so they're more likely to be found by other players.
+#     This can make traps a bit more interesting by making them activate mid-song more often.
+#     Enabling this is the same as adding all the trap item names to the Non-local Items setting.
+#     """
+#
+#     display_name = "Non-local Traps"
+#
+#     default = False
 
 
 class SilenceTrapAmount(Range):
@@ -296,7 +296,7 @@ class UNBEATABLEArcadeOptions(PerGameCommonOptions):
     start_char_count: StartCharacterCount
 
     use_traps: UseTraps
-    non_local_traps: NonLocalTraps
+    # non_local_traps: NonLocalTraps
     silence_amount: SilenceTrapAmount
     stealth_amount: StealthTrapAmount
     rainbow_amount: RainbowTrapAmount
@@ -320,7 +320,7 @@ option_groups = [
     ),
     OptionGroup(
         "Trap Options",
-        [UseTraps, NonLocalTraps, SilenceTrapAmount, StealthTrapAmount, RainbowTrapAmount, ZoomTrapAmount, CrawlTrapAmount]
+        [UseTraps, SilenceTrapAmount, StealthTrapAmount, RainbowTrapAmount, ZoomTrapAmount, CrawlTrapAmount]
     ),
     OptionGroup(
         "Advanced Difficulty Options",

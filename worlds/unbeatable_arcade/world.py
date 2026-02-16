@@ -40,11 +40,12 @@ class UNBEATABLEArcadeWorld(World):
             # Likely due to randomized settings, swap them so max > min
             swap = self.options.min_difficulty
             self.options.min_difficulty = self.options.max_difficulty
-            self.options.max_difficulty = swap;
-        
-        if self.options.non_local_traps:
+            self.options.max_difficulty = swap
+
+        # Only activate non-local traps if there's another multiworld to send them to
+        # if self.options.non_local_traps and len(self.multiworld.worlds) > 1:
             # The shorthand option for adding all traps to non_local_items
-            items.add_traps_non_local(self)
+            # items.add_traps_non_local(self)
 
         # Since this is the first stage of generation, add our included songs here
         self.included_songs = songs.get_included_songs(self.options.use_breakout)
